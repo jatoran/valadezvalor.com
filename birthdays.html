@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valadez Family Birthdays</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Navbar Stylesheet -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <style>
+        /* Keep existing page-specific styles, but they might need adjustments if conflicts arise */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #e67e22; /* Changed to a darker orange for better contrast */
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --month-header-bg: #4a90e2;
+            --month-header-color: #fff;
+            --birthday-bg: #fff;
+            --birthday-bg-alt: #f9f9f9; /* Added alternate background color */
+            --birthday-border: #e0e0e0;
+            --font-size-page-title: 1.8rem; /* Use for page specific title */
+            --font-size-month: 1.2rem;
+            --font-size-name: 1rem;
+            --font-size-date: 0.9rem;
+            --padding-main: 1.5rem;
+            --padding-header: 1rem;
+            --padding-item: 0.25rem 0.5rem; /* Reduced padding for compactness */
+            --margin-month: 1rem 0;
+            --margin-item: 0.25rem 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.4;
+            /* Remove flex display from style.css for this page if it conflicts */
+            display: block !important;
+        }
+
+        /* Removed old header styling */
+
+        h1.page-title { /* New class for the page title inside main */
+            font-family: 'Lora', serif;
+            font-size: var(--font-size-page-title);
+            color: var(--primary-color); /* Or keep original header color */
+            text-align: center;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem; /* Add some space below navbar */
+        }
+
+        /* Removed old nav styling */
+
+        main {
+             /* Adjust main styles if needed, ensure it doesn't conflict with body flex settings from style.css */
+            max-width: 450px; /* Adjusted max-width slightly */
+            margin: 0 auto;
+            padding: var(--padding-main);
+            /* Reset flex properties potentially inherited from style.css */
+            display: block !important;
+            flex-grow: initial !important;
+            justify-content: initial !important;
+            align-items: initial !important;
+            overflow-y: visible !important;
+        }
+
+        .birthday-list {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            margin-bottom: var(--margin-month);
+            overflow: hidden;
+        }
+
+        .month-header {
+            background-color: var(--primary-color);
+            color: var(--month-header-color);
+            padding: var(--padding-header);
+            font-size: var(--font-size-month);
+            font-weight: 700;
+            border-bottom: 1px solid var(--background-color);
+        }
+
+        .birthday-items {
+            padding: 0.5rem 0.75rem;
+        }
+
+        .birthday-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Vertically align items */
+            padding: var(--padding-item);
+            border-bottom: 1px solid var(--birthday-border);
+            font-size: var(--font-size-name);
+            background-color: var(--birthday-bg); /* Ensure default background color */
+        }
+
+        .birthday-item:nth-child(odd) {
+            background-color: var(--birthday-bg-alt);
+        }
+
+        .birthday-item:last-child {
+            border-bottom: none;
+        }
+
+        .birthday-name {
+            font-weight: 600;
+            color: var(--text-color);
+            flex-grow: 1; /* Allow name to take available space */
+            margin-right: 10px; /* Space between name and date */
+        }
+
+        .birthday-date {
+            color: var(--secondary-color);
+            padding-left: 10px;
+            padding-right: 10px;
+            font-weight: 600;
+            font-size: var(--font-size-date);
+            flex-shrink: 0; /* Prevent date from shrinking */
+            text-align: right; /* Align date to the right */
+        }
+
+        /* Removed old back-link styling */
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+                max-width: 100%; /* Allow full width */
+            }
+
+            h1.page-title {
+                font-size: 1.5rem; /* Adjust title size */
+            }
+
+            .month-header {
+                font-size: 1rem;
+            }
+
+             .birthday-item {
+                font-size: 0.9rem;
+             }
+
+            .birthday-date {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 400px) { /* More granular control for smaller screens */
+             .birthday-item {
+                flex-direction: column; /* Stack name and date */
+                align-items: flex-start; /* Align to start */
+                padding: 0.5rem;
+             }
+             .birthday-date {
+                margin-top: 0.2rem;
+                padding-left: 0; /* Remove padding when stacked */
+                padding-right: 0;
+                text-align: left; /* Align left when stacked */
+             }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- === NAVBAR PLACEHOLDER (Main Site Navigation) === -->
+    <div id="navbar-placeholder">
+        <nav style="background-color: #2c3e50; color: white; min-height: 60px; display: flex; align-items: center; padding: 0 1rem; position: sticky; top: 0; z-index: 1000;">
+            Loading Navigation...
+        </nav>
+    </div>
+    <!-- === END NAVBAR PLACEHOLDER === -->
+
+    <main>
+        <!-- Page Specific Title -->
+        <h1 class="page-title">Family Birthdays by Month</h1>
+
+        <!-- Removed old header and nav -->
+
+        <div id="birthdayContainer">
+            <!-- Birthday lists will be dynamically inserted here -->
+        </div>
+
+        <!-- Removed old "Back to Home" link -->
+    </main>
+
+    <script>
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        function createMonthSection(month, birthdays) {
+            // Sort birthdays within the month by day
+            birthdays.sort((a, b) => a.date - b.date); // 'date' is now just the day number
+
+            const section = document.createElement('div');
+            section.className = 'birthday-list';
+            section.innerHTML = `
+                <div class="month-header">${month}</div>
+                <div class="birthday-items">
+                    ${birthdays.map(b => `
+                        <div class="birthday-item">
+                            <span class="birthday-name">${b.name}</span>
+                            <span class="birthday-date">${b.date}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            return section;
+        }
+
+        function sortBirthdaysByMonthAndDay(birthdays) {
+            // Primary sort: month, Secondary sort: day
+            return birthdays.sort((a, b) => {
+                const [aMonth, aDay] = a.date.split('-').map(Number);
+                const [bMonth, bDay] = b.date.split('-').map(Number);
+                if (aMonth !== bMonth) {
+                    return aMonth - bMonth;
+                }
+                return aDay - bDay;
+            });
+        }
+
+        async function fetchBirthdaysAndRender() {
+            try {
+                const response = await fetch('birthdays.json');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch birthdays data');
+                }
+                const birthdays = await response.json();
+
+                const sortedBirthdays = sortBirthdaysByMonthAndDay(birthdays); // Sort all first
+                const container = document.getElementById('birthdayContainer');
+                container.innerHTML = ''; // Clear any previous content or loading message
+
+                const birthdaysByMonth = months.reduce((acc, month) => {
+                    acc[month] = [];
+                    return acc;
+                }, {});
+
+                // Group sorted birthdays by month
+                sortedBirthdays.forEach(birthday => {
+                    const [monthStr, dayStr] = birthday.date.split('-');
+                    const monthIndex = parseInt(monthStr, 10) - 1;
+                    if (monthIndex >= 0 && monthIndex < 12) {
+                        const monthName = months[monthIndex];
+                        const dayNumber = parseInt(dayStr, 10); // Remove leading zero
+                        birthdaysByMonth[monthName].push({ ...birthday, date: dayNumber }); // Store only day number
+                    } else {
+                        console.warn(`Invalid month found in date: ${birthday.date} for ${birthday.name}`);
+                    }
+                });
+
+                // Render each month section if it has birthdays
+                months.forEach(month => {
+                    if (birthdaysByMonth[month].length > 0) {
+                        // Birthdays within the month are already sorted by day due to the initial sort
+                        const monthSection = createMonthSection(month, birthdaysByMonth[month]);
+                        container.appendChild(monthSection);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching or rendering birthdays:', error);
+                const container = document.getElementById('birthdayContainer');
+                if (container) {
+                    container.innerHTML = '<p style="color: red; text-align: center;">Error loading birthdays. Please try again later.</p>';
+                }
+            }
+        }
+
+        fetchBirthdaysAndRender();
+    </script>
+
+    <!-- === NAVBAR SCRIPT (defer ensures it runs after HTML parsing) === -->
+    <script src="js/navbar.js" defer></script>
+    <!-- === END NAVBAR SCRIPT === -->
+</body>
+</html>

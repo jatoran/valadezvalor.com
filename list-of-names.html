@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valadez Family - List of Names</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Navbar Stylesheet -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <style>
+        /* Keep existing page-specific styles, adjust if needed */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #e67e22;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --header-bg: #4a90e2;
+            --header-text-color: #fff;
+            --table-header-bg: #4a90e2;
+            --table-header-text-color: #fff;
+            --table-row-bg: #fff;
+            --table-row-bg-alt: #f9f9f9;
+            --table-border-color: #e0e0e0;
+            --font-size-page-title: 1.8rem; /* Use for page specific title */
+            --font-size-table: 1rem;
+            --padding-main: 1.5rem;
+            --padding-header: 1rem; /* Keep for table header */
+            --padding-table: 0.75rem;
+            --margin-bottom: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+             /* Remove flex display from style.css for this page if it conflicts */
+             display: block !important;
+        }
+
+        /* Removed old header styling */
+
+        h1.page-title { /* New class for the page title inside main */
+            font-family: 'Lora', serif;
+            font-size: var(--font-size-page-title);
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem; /* Add space below navbar */
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto; /* Center main content */
+            padding: 0 1rem 1.5rem 1rem; /* Add bottom padding */
+             /* Reset flex properties potentially inherited from style.css */
+            display: block !important;
+            flex-grow: initial !important;
+            justify-content: initial !important;
+            align-items: initial !important;
+            overflow-y: visible !important;
+        }
+
+        /* Removed old back-link styling */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: var(--shadow);
+            background-color: var(--table-row-bg);
+            margin-top: 1rem; /* Space between title and table */
+        }
+
+        th, td {
+            padding: var(--padding-table);
+            text-align: left;
+            border-bottom: 1px solid var(--table-border-color);
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            color: var(--table-header-text-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            position: sticky; /* Make table header sticky */
+            top: var(--navbar-height); /* Stick below the navbar */
+            z-index: 10; /* Ensure it's above table content but below navbar */
+        }
+
+        tr:nth-child(odd) td {
+            background-color: var(--table-row-bg-alt);
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 0 0.5rem 1rem 0.5rem;
+                max-width: 100%;
+            }
+
+            h1.page-title {
+                font-size: 1.5rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+             th {
+                /* Adjust top position if navbar height changes on mobile */
+                top: var(--navbar-height);
+             }
+        }
+         @media (max-width: 480px) {
+             th, td {
+                font-size: 0.85rem;
+                padding: 0.4rem;
+             }
+             th {
+                font-size: 1rem;
+             }
+         }
+    </style>
+</head>
+<body>
+    <!-- === NAVBAR PLACEHOLDER (Main Site Navigation) === -->
+    <div id="navbar-placeholder">
+        <nav style="background-color: #2c3e50; color: white; min-height: 60px; display: flex; align-items: center; padding: 0 1rem; position: sticky; top: 0; z-index: 1000;">
+            Loading Navigation...
+        </nav>
+    </div>
+    <!-- === END NAVBAR PLACEHOLDER === -->
+
+    <main>
+        <!-- Page Specific Title -->
+        <h1 class="page-title">Alphabetical List of Names</h1>
+
+        <!-- Removed old header and back link -->
+
+        <table id="namesTable">
+            <thead>
+                <tr>
+                    <th>Name (Last, First)</th>
+                    <th>Birth Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sorted names will be inserted here -->
+                 <tr><td colspan="2" style="text-align:center; padding: 20px;">Loading names...</td></tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        // Function to fetch and render the sorted list of names
+        async function fetchAndRenderNames() {
+            const tbody = document.querySelector('#namesTable tbody');
+            try {
+                const response = await fetch('birthdays.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch birthdays data: ${response.statusText}`);
+                }
+                const birthdays = await response.json();
+
+                // Function to extract first and last names
+                function parseName(fullName) {
+                    // Remove any content within parentheses
+                    const nameWithoutParentheses = fullName.split('(')[0].trim();
+                    const nameParts = nameWithoutParentheses.split(' ').filter(part => part !== '');
+
+                    if (nameParts.length === 0) return { firstName: '', lastName: '' };
+                    if (nameParts.length === 1) return { firstName: '', lastName: nameParts[0] }; // Handle single names as last names
+
+                    // Assume the last word is the last name
+                    const lastName = nameParts.pop();
+                    const firstName = nameParts.join(' ');
+
+                    return { firstName, lastName };
+                }
+
+                // Sort the birthdays by Last Name, then First Name
+                birthdays.sort((a, b) => {
+                    const aParts = parseName(a.name);
+                    const bParts = parseName(b.name);
+
+                    const lastNameComparison = aParts.lastName.localeCompare(bParts.lastName, undefined, { sensitivity: 'base' });
+                    if (lastNameComparison !== 0) {
+                        return lastNameComparison;
+                    }
+                    // If last names are the same, sort by first name
+                    return aParts.firstName.localeCompare(bParts.firstName, undefined, { sensitivity: 'base' });
+                });
+
+
+                tbody.innerHTML = ''; // Clear loading message
+
+                // Populate the table with sorted names
+                birthdays.forEach(person => {
+                    const { firstName, lastName } = parseName(person.name);
+                    // Format name as "Last, First" or just "Last" if no first name, or original if parsing failed weirdly
+                    const formattedName = lastName ? (firstName ? `${lastName}, ${firstName}` : lastName) : person.name;
+
+                    const tr = document.createElement('tr');
+
+                    const nameTd = document.createElement('td');
+                    nameTd.textContent = formattedName;
+                    // Add original name in title attribute for clarity if needed
+                    nameTd.setAttribute('title', person.name);
+                    tr.appendChild(nameTd);
+
+                    const dateTd = document.createElement('td');
+                    // Format the date as Month Day
+                    try {
+                        const [month, day] = person.date.split('-');
+                        // Use a consistent year (like 2000) for date formatting, avoids leap year issues if only month/day matter
+                        const dateObj = new Date(2000, parseInt(month) - 1, parseInt(day));
+                        const options = { month: 'long', day: 'numeric' };
+                         // Check if date is valid before formatting
+                        if (!isNaN(dateObj.getTime())) {
+                           dateTd.textContent = dateObj.toLocaleDateString('en-US', options);
+                        } else {
+                             dateTd.textContent = person.date; // Fallback to original string if invalid
+                             console.warn(`Invalid date format for ${person.name}: ${person.date}`);
+                        }
+                    } catch (e) {
+                        dateTd.textContent = person.date; // Fallback if split fails
+                        console.error(`Error parsing date for ${person.name}: ${person.date}`, e);
+                    }
+                    tr.appendChild(dateTd);
+
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Error fetching or rendering names:', error);
+                if (tbody) {
+                    tbody.innerHTML = '<tr><td colspan="2" style="color: red; text-align: center; padding: 20px;">Error loading names. Please try again later.</td></tr>';
+                }
+            }
+        }
+
+        fetchAndRenderNames();
+    </script>
+
+     <!-- === NAVBAR SCRIPT (defer ensures it runs after HTML parsing) === -->
+    <script src="js/navbar.js" defer></script>
+    <!-- === END NAVBAR SCRIPT === -->
+</body>
+</html>

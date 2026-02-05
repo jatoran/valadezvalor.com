@@ -1,0 +1,362 @@
+/* valadezfamily/style.css */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2c3e50;
+  --background-color: #ecf0f1;
+  --text-color: #34495e;
+  --accent-color: #3ce7de;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Define navbar height variable for calculations */
+  --navbar-height: 60px; /* Default height, ensure matches navbar.css */
+  /* Approximate header height for calculations (adjust if header size changes) */
+  --header-height-approx: 60px; /* Example, adjust based on actual rendered height */
+  /* Approximate video title height */
+  --video-title-height-approx: 40px; /* Example, adjust based on actual rendered height */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Darker background for specific page types */
+body.page-slideshow,
+body.page-video {
+  background-color: #d8dcdf; /* Slightly darker grey, adjust as needed */
+}
+
+body, html {
+  font-family: 'Lora', Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure body takes at least full viewport height */
+  /* Add padding to body bottom to prevent fixed controls from overlapping final content if page scrolls */
+  /* Adjust padding value based on controls height */
+  padding-bottom: 30px; /* Example: Adjust if controls height changes */
+}
+
+body.page-video {
+  padding-bottom: 10px!important;
+}
+
+#video-page-title{
+  padding-bottom:5px!important; 
+  margin-bottom:0px!important;
+}
+header {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  /* Ensure header shrinks if needed (relevant on landscape) */
+  flex-shrink: 0;
+  position: relative; /* Needed for potential stacking context */
+  z-index: 900; /* Below navbar but above main content */
+}
+
+h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-weight: normal;
+}
+
+main {
+  flex-grow: 1; /* Allows main to fill remaining vertical space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Ensure main takes full width */
+  /* Default padding, specific pages might override or adjust */
+  padding: 1rem;
+  overflow-y: auto; /* Allow scrolling if content exceeds viewport */
+  position: relative; /* Establish stacking context */
+  min-height: 0; /* Important for flex-grow with overflow */
+}
+
+/* --- Video Player Specific Styles --- */
+main#video-main {
+  justify-content: flex-start; /* Align content to the top */
+  overflow: hidden; /* Usually hide overflow here unless scrolling needed */
+}
+
+main#video-main h1.page-title#video-page-title {
+  font-family: 'Lora', serif;
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  flex-shrink: 0; /* Prevent title from shrinking vertically */
+}
+
+#video-container {
+  border-radius: 10px;
+  background-color: black; /* Ensure background is set */
+  box-shadow: var(--shadow);
+  overflow: hidden; /* Clip the video */
+  position: relative; /* For potential future overlays */
+  line-height: 0;     /* Remove extra space below video */
+  width: 100%;        /* Take full width available in padded main */
+  max-width: 1200px;  /* Optional max width */
+  flex-shrink: 1; /* Allow this container to shrink if needed */
+  margin: 0 auto; /* Center the container */
+  /* Remove aspect-ratio, height determined by video content up to max-height */
+  height: auto; /* Let height be determined by content */
+  max-height: calc(100vh - var(--navbar-height) - var(--video-title-height-approx) - 3rem); /* Cap height */
+}
+
+#video-player-element {
+  display: block; /* Ensure it's block level */
+  width: 100%; /* Fill container width */
+  height: auto; /* Maintain aspect ratio based on width */
+  max-height: 100%; /* Don't exceed container's max-height */
+  object-fit: contain; /* Scale video within bounds */
+}
+
+/* --- Slideshow Specific Styles --- */
+
+/* Container for slideshow */
+#slideshow-container {
+  width: 100%;            /* Take full available width */
+  max-width: 1200px;       /* Limit maximum size */
+  background-color: black; /* Black background for letterboxing/pillarboxing */
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+  overflow: hidden;        /* Crucial: hide parts of image outside this box */
+  position: relative;      /* Needed for positioning controls originally, less critical now but keep for counter */
+  margin: 0 auto 1rem auto;/* Center block element, add bottom margin */
+
+  /* Remove fixed aspect-ratio */
+  height: auto; /* Let height be determined by image content */
+  /* Calculate max-height based on viewport, navbar, and header */
+  max-height: calc(100vh - var(--navbar-height) - var(--header-height-approx) - 2rem); /* Adjust 2rem margin as needed */
+
+  /* Ensure flex settings for centering content inside */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+/* Div directly holding the image */
+#slideshow {
+  width: 100%;           /* Fill the container */
+  height: 100%;          /* Fill the container */
+  display: flex;         /* Use flex to easily center the image */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  max-height: 100%; /* Ensure slideshow div doesn't exceed container max-height */
+}
+
+/* Slideshow image itself */
+#slideshow img {
+  display: block;         /* Remove extra space below image */
+  width: 100%;          /* Fill the container width */
+  height: auto;         /* Calculate height automatically based on aspect ratio */
+  max-height: 100%;     /* Ensure image height doesn't exceed the container's max-height */
+  object-fit: contain;  /* Scale image down to fit within container, maintaining its aspect ratio */
+}
+
+/* --- Controls and Counter --- */
+
+/* Image Counter (still positioned relative to slideshow container) */
+.image-counter {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  z-index: 10; /* Ensure counter is above image */
+}
+
+/* Controls (Fixed at bottom of screen) */
+#controls {
+  position: fixed; /* Fix to viewport */
+  bottom: 0; /* Align to bottom */
+  left: 0; /* Align to left */
+  width: 100%; /* Full viewport width */
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0; /* Increased padding slightly for touch */
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background */
+  z-index: 1000; /* Same as navbar, ensure visibility */
+  margin: 0;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  opacity: 0.85;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+button:hover, button:focus {
+  background-color: var(--accent-color);
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+
+/* --- Animations --- */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- Swipe Areas (if used) --- */
+.swipe-area {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 25%;
+  z-index: 5; /* Below counter */
+}
+
+.swipe-left { left: 0; }
+.swipe-right { right: 0; }
+
+/* --- Responsive Design --- */
+
+/* General Mobile Adjustments (Portrait & Landscape) */
+@media (max-width: 768px) {
+  main {
+    padding: 0rem;
+    /* Adjust main padding if needed to account for body padding + fixed controls */
+    padding-bottom: 0.5rem; /* Example: Ensure some space above body padding */
+  }
+
+  #slideshow-container,
+  #video-container {
+    max-width: 100%;
+    border-radius: 0;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Adjust max-height calculations for mobile */
+  #slideshow-container {
+    max-height: calc(100vh - var(--navbar-height) - var(--header-height-approx) - 1rem); /* Less margin */
+  }
+
+  #video-container {
+     max-height: calc(100vh - var(--navbar-height) - var(--video-title-height-approx) - 2rem); /* Less margin */
+  }
+
+  /* Fixed controls adjustments */
+  #controls {
+    gap: 0.25rem;
+    padding: 0.4rem 0; /* Adjust padding */
+  }
+
+  button {
+    width: 35px; /* Slightly larger touch target */
+    height: 35px;
+    font-size: 0.9rem; /* Adjust icon size potentially */
+  }
+
+  .image-counter {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.7rem;
+  }
+}
+
+
+/* Mobile Landscape Specific Adjustments (Short & Wide Screens) */
+@media (orientation: landscape) and (max-height: 500px) {
+
+  header {
+    padding: 0.5rem;
+  }
+  /* Reduce header text size */
+  body.page-slideshow header h1,
+  body.page-video header h1 {
+    font-size: 1.1rem;
+    margin-bottom: 0.1rem;
+  }
+  body.page-slideshow header h3#current-month {
+    font-size: 0.8rem;
+  }
+  body.page-video header h1.page-title#video-page-title {
+     margin-bottom: 0.25rem;
+  }
+
+  main {
+    padding: 0.25rem;
+    padding-bottom: 0.25rem; /* Ensure space above fixed controls */
+  }
+
+  /* Container Constraints for Landscape */
+  #slideshow-container {
+     max-height: calc(100vh - var(--navbar-height) - var(--header-height-approx) - 1rem);
+  }
+
+  #video-container {
+     max-height: calc(100vh - var(--navbar-height) - var(--video-title-height-approx) - 1rem);
+  }
+
+  /* Fixed controls adjustments for landscape */
+   #controls {
+        padding: 0.3rem 0;
+        background-color: rgba(0, 0, 0, 0.7); /* Maybe darker */
+    }
+    button {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Very Small Mobile Portrait Adjustments */
+@media (max-width: 480px) {
+ /* Further adjustments if needed for very small screens */
+   #controls {
+        gap: 0.15rem;
+    }
+    button {
+        width: 32px; /* Consistent small size */
+        height: 32px;
+    }
+    .image-counter {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+    }
+}

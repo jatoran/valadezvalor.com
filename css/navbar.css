@@ -1,0 +1,278 @@
+/* valadezfamily/css/navbar.css */
+
+/* Variables for easy customization */
+:root {
+    --navbar-bg: #2c3e50; /* Dark blue-grey */
+    --navbar-text-color: #ecf0f1; /* Light grey */
+    --navbar-brand-color: #ffffff; /* White */
+    --navbar-link-hover-bg: #34495e; /* Slightly lighter blue-grey */
+    --navbar-link-active-color: #3498db; /* Primary blue from style.css */
+    --navbar-dropdown-bg: #34495e;
+    --navbar-dropdown-hover-bg: #4e6d88;
+    --navbar-height: 60px;
+    --navbar-toggler-color: var(--navbar-text-color);
+    --navbar-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar {
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text-color);
+    min-height: var(--navbar-height);
+    box-shadow: var(--navbar-shadow);
+    position: sticky; /* Make navbar stick to top */
+    top: 0;
+    z-index: 1000; /* Navbar itself */
+    width: 100%;
+    overflow: visible !important; /* ADDED: Force navbar to allow overflow */
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    overflow: visible; /* ADDED: Ensure container allows overflow too */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--navbar-height);
+}
+
+.navbar-brand {
+    color: var(--navbar-brand-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Lora', serif; /* Match header font */
+}
+
+.navbar-toggler {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.navbar-toggler-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--navbar-toggler-color);
+    border-radius: 2px;
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animation for hamburger icon */
+.navbar-toggler.active .navbar-toggler-icon:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.navbar-toggler.active .navbar-toggler-icon:nth-child(2) {
+    opacity: 0;
+}
+.navbar-toggler.active .navbar-toggler-icon:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+.navbar-collapse {
+    display: flex;
+}
+
+.navbar-nav {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem; /* Spacing between nav items */
+}
+
+.nav-item {
+    position: relative; /* Needed for dropdown positioning */
+}
+
+.nav-link {
+    color: var(--navbar-text-color);
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    display: block;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap; /* Prevent wrapping */
+    font-weight: 600; /* Slightly bolder */
+    font-family: 'Poppins', sans-serif; /* Match body font or choose */
+    font-size: 0.95rem;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    background-color: var(--navbar-link-hover-bg);
+    color: var(--navbar-brand-color); /* White on hover */
+}
+
+/* Active link styling */
+.nav-link.active {
+    color: var(--navbar-link-active-color);
+    font-weight: bold; /* Make active link stand out */
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background */
+}
+.nav-link.active:hover {
+    background-color: var(--navbar-link-hover-bg); /* Keep hover consistent */
+    color: var(--navbar-link-active-color);
+}
+
+/* Style for parent of active dropdown item */
+.nav-link.active-parent {
+    background-color: rgba(255, 255, 255, 0.05); /* Very subtle indication */
+}
+
+/* Dropdown */
+.dropdown-toggle .dropdown-arrow {
+    display: inline-block;
+    margin-left: 0.3em;
+    font-size: 0.7em;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute; /* Crucial for positioning below toggle */
+    top: 100%; /* Position below the nav item */
+    left: 0; /* Align with the left of the nav item */
+    background-color: var(--navbar-dropdown-bg);
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    min-width: 180px; /* Minimum width */
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1100; /* ENSURE THIS IS HIGHER THAN NAVBAR AND PAGE HEADER */
+}
+
+.dropdown-item {
+    color: var(--navbar-text-color);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    display: block;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: var(--navbar-dropdown-hover-bg);
+    color: var(--navbar-brand-color);
+}
+
+/* Show dropdown on hover (desktop) */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.nav-item.dropdown:hover .dropdown-toggle .dropdown-arrow {
+    transform: rotate(180deg);
+}
+/* Accessibility: Show on focus within */
+.nav-item.dropdown:focus-within .dropdown-menu {
+     display: block;
+}
+.nav-item.dropdown:focus-within .dropdown-toggle .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar-container {
+        /* No changes needed here typically */
+    }
+
+    .navbar-toggler {
+        display: block; /* Show hamburger */
+    }
+
+    .navbar-collapse {
+        display: none; /* Hide menu by default */
+        position: absolute;
+        top: var(--navbar-height); /* Position below navbar */
+        left: 0;
+        width: 100%;
+        background-color: var(--navbar-bg);
+        box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+        flex-direction: column;
+        align-items: stretch; /* Stretch items full width */
+        max-height: calc(100vh - var(--navbar-height)); /* Limit height */
+        overflow-y: auto; /* Allow scrolling if needed */
+        z-index: 1050; /* High z-index for mobile menu container */
+    }
+
+    .navbar-collapse.active {
+        display: flex; /* Show menu when toggler is active */
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 0; /* Remove gap, handled by padding */
+        width: 100%;
+    }
+
+    .nav-item {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator lines */
+    }
+    .nav-item:last-child {
+        border-bottom: none;
+    }
+
+    .nav-link {
+        padding: 1rem 1.5rem; /* More padding for touch */
+        text-align: left;
+        border-radius: 0; /* Full width links */
+    }
+
+    /* Mobile Dropdown */
+    .dropdown-menu {
+        position: static; /* Static positioning within the flow */
+        display: none; /* Hide by default */
+        background-color: rgba(0,0,0,0.1); /* Slightly different bg */
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: auto; /* Reset z-index, inherits from collapse */
+    }
+    .dropdown-menu li {
+         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+     .dropdown-menu li:last-child {
+        border-bottom: none;
+    }
+
+
+    .dropdown-item {
+        padding: 0.8rem 2rem; /* Indent dropdown items */
+        font-size: 0.9rem;
+    }
+    .dropdown-item:hover {
+        background-color: var(--navbar-link-hover-bg);
+    }
+
+    /* Show dropdown on click (mobile) - JS will handle adding 'open' class */
+    .nav-item.dropdown.open > .dropdown-menu {
+        display: block;
+    }
+    .nav-item.dropdown.open > .dropdown-toggle .dropdown-arrow {
+       transform: rotate(180deg);
+    }
+
+    /* Hide dropdown on hover for mobile */
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: none; /* Prevent hover from opening on mobile */
+    }
+     .nav-item.dropdown.open:hover .dropdown-menu {
+        display: block; /* But keep it open if already clicked open */
+    }
+
+}

@@ -1,0 +1,384 @@
+<!-- valadezfamily/name-meanings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valadez Family Name Meanings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Link to the main stylesheet for potential inheritance -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Navbar Stylesheet -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <style>
+        /* Page-specific styles */
+        :root {
+            /* Using variables similar to other pages for consistency */
+            --primary-color: #3498db; /* From style.css */
+            --secondary-color: #2c3e50; /* From style.css */
+            --background-color: #ecf0f1; /* From style.css */
+            --text-color: #34495e; /* From style.css */
+            --header-text-color: #fff;
+            --list-bg: #fff;
+            --list-border-color: #ddd;
+            --list-item-bg-alt: #f9f9f9;
+            --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            --font-size-page-title: clamp(1.5rem, 5vw, 2.5rem); /* For page title */
+            --font-size-name: 1.1rem;
+            --font-size-meaning: 1rem;
+            --padding-main: 1.5rem;
+            --padding-list-item: 1rem;
+            --margin-bottom: 1rem;
+        }
+
+        /* Basic resets and body styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            /* Ensure body doesn't interfere with main */
+            display: block !important;
+        }
+
+        /* Removed old header styling */
+
+        h1.page-title { /* New class for the page title inside main */
+            font-family: 'Lora', serif;
+            font-size: var(--font-size-page-title);
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem; /* Add space below navbar */
+        }
+
+        /* Main content area */
+        main {
+            /* Keep visual styles */
+            max-width: 900px;
+            width: 95%;
+            margin: 0 auto 2rem auto; /* Center and add bottom margin */
+            padding: var(--padding-main);
+            background-color: var(--list-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            /* Reset flex potentially inherited from style.css */
+            display: block !important;
+            flex-grow: initial !important;
+            justify-content: initial !important;
+            align-items: initial !important;
+            overflow-y: visible !important;
+        }
+
+        /* Removed old back link container/styling */
+
+        /* Name list styling */
+        .name-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .name-item {
+            border-bottom: 1px solid var(--list-border-color);
+            padding: var(--padding-list-item);
+            display: flex;
+            flex-direction: column; /* Stack name and meaning on small screens */
+            gap: 0.25rem; /* Space between name and meaning */
+        }
+
+        .name-item:last-child {
+            border-bottom: none;
+        }
+
+        .name-item:nth-child(odd) {
+            background-color: var(--list-item-bg-alt);
+        }
+
+        .name-title {
+            font-family: 'Lora', serif;
+            font-weight: 700;
+            font-size: var(--font-size-name);
+            color: var(--primary-color);
+            flex-shrink: 0; /* Prevent name from shrinking */
+            width: 150px; /* Fixed width for alignment */
+        }
+
+        .name-meaning {
+            font-size: var(--font-size-meaning);
+            color: var(--text-color);
+            flex-grow: 1; /* Allow meaning to take remaining space */
+            padding-left: 0; /* Reset padding if needed */
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 600px) {
+            .name-item {
+                flex-direction: row; /* Side-by-side layout */
+                align-items: flex-start; /* Align items at the start */
+                gap: 1rem; /* Increase gap */
+            }
+            .name-meaning {
+                padding-left: 1rem; /* Add space only on wider screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+                width: 100%;
+                margin: 0 0 1rem 0; /* Adjust margin for smaller screens */
+                border-radius: 0; /* Full width on small screens */
+                box-shadow: none; /* Optional: remove shadow on mobile */
+            }
+
+             body {
+                padding: 0;
+             }
+
+             h1.page-title {
+                 font-size: 1.8rem; /* Adjust title size for mobile */
+             }
+
+            .name-title {
+                 width: auto; /* Allow name title to wrap if needed */
+                 margin-bottom: 0.5rem; /* Add space below title on stacked layout */
+            }
+             .name-meaning {
+                 padding-left: 0; /* Ensure no left padding on stacked layout */
+             }
+        }
+
+         /* Removed old Footer Nav Links styling */
+
+    </style>
+</head>
+<body>
+    <!-- === NAVBAR PLACEHOLDER (Main Site Navigation) === -->
+    <div id="navbar-placeholder">
+        <nav style="background-color: #2c3e50; color: white; min-height: 60px; display: flex; align-items: center; padding: 0 1rem; position: sticky; top: 0; z-index: 1000;">
+            Loading Navigation...
+        </nav>
+    </div>
+    <!-- === END NAVBAR PLACEHOLDER === -->
+
+    <main>
+         <!-- Page Specific Title -->
+        <h1 class="page-title">Family Name Meanings</h1>
+
+        <!-- Removed old header and back link container -->
+
+        <ul id="nameListContainer" class="name-list">
+            <!-- Name meanings will be dynamically inserted here -->
+            <li class="name-item"><span class="name-title">Loading...</span><span class="name-meaning">Please wait while names are loaded.</span></li>
+        </ul>
+    </main>
+
+    <script>
+        // Keep the existing script for fetching and rendering name data
+        const nameData = `
+Aaron - Mountain of Strength, Exalted, strong warrior lion
+Aiden - Little fire; fiery one
+Adam - Man, Mankind, Soil, one formed from the earth or soil, son of red earth
+Adela - The noble one
+Alexander - Defender of Mankind, Protector of Men
+Alma - kind, nourishing, fostering mother, soul, young woman, salt water, caring mother
+Andrew - strength, courage
+Anna - grace or favored, God’s Promise
+Anthony - priceless, highly praiseworthy
+Antonio - priceless, highly praiseworthy
+Arthur - Bear, strength or courage
+Ashley - Ash Tree Meadow
+Aura - Breeze, Wind
+Baiko - bold, daring
+Bandel - Lion, All, Merciful
+Balbuena - pleasant valley
+Bella - God is my oath.
+Bertha - Bright one, famous
+Betho - bright and famous
+Blanca - Purity, Innocence, Nobility
+Brandon - beacon of light, broom hill, prince, prince
+Brooke - water or small stream
+Cantu - Singer of cantor
+Carla - free one
+Carlos - Free man
+Cassidy - descendent of curly haired one - clever
+Campos - Fields, someone who lived in the countryside
+Cheesar - Loving Kindness, Mercy
+Christiana - follower of Christ
+Christian - follower of Christ
+Christina - follower of Christ
+Cindy - Woman of Kynthos, Light, Associated with Moon and Beauty
+Claudia - enclosure
+Cora - Maiden, Heart
+Cruz - Cross
+Crystal - clear or precious
+Cynthia - From Mount Kynthos, Moon
+David - Beloved, Uncle
+Damian - To tame, subdue
+D’Angelo - messenger or angel
+Delgado - Thin, Slender, Derived from the Latin Word: Delicatus, meaning Dainty or Exquisite
+Diana - divine, heavenly, godlike
+Dorothy - Gift of God
+Easter - The season of new birth
+Eddie - wealthy guardian, guardian of riches
+Ethan - strong, enduring, long lived
+Elijah - My God is Yahweh
+Ella - Ray of light, true to all, bright one, shining one
+Eugene - well - born or noble
+Farrah - joy or happiness
+Flores - Flower
+Frank - noble and free
+Gabriella - God is my strength, strong woman of God
+Glen - narrow valley
+Isabelle - God is my oath.
+Isaura - God is my oath, God is my promise
+Jacob - Supplanter, Holder of the Heel, He will triumph
+James - Supplanter, Holder of the Heel, He will triumph
+Janel - God is Gracious, God is Merciful
+Jeannie - God is gracious, The Lord gives mercy
+Jeff - God’s Peace, or Pledge of Peace
+Jimbo - to drive out, defeat, dispossess
+Jose - God will add or God will increase
+Joseph - he shall add; God will add
+Josephine - God will increase
+Joshua - God is Salvation, Yahweh is Salvation, Derived from the Hebrew name: Yehoshua, meaning God is Deliverance
+Judith - praised, celebrated woman of Judea
+Juanita - God is gracious
+Justin - just, fair, righteous
+Juliet - youthful, divine
+Kevin - kind, gentle
+Kingston - from the kingstown or royal stone
+Kiger - violin player
+Kyle - narrow, steadfast confidence; reliance
+Lane - pathway, young warrior
+Lee - meadow or pasture
+Lacey - playful and full of energy
+Lauren - Laurel Tree, Victory, Wisdom, Sweet of Honor
+Lilliana - Combination of Lily, Beauty, Purity, and Innocence
+Luca - bringer of light
+Luis - famous in battle
+Madison - strength in battle; son of a mighty warrior; gift from Yahweh
+Margie - Pearl
+Maria - sea; bitter; wished for child; child of the sea
+Matilyn - Woman from Magdala, Elegant, Great, Tower
+Maya - Water
+Mendez - son of Mendo; complete sacrifice
+Michael - Who is like god? Who is as god?
+Michelle - who resembles God; who is like God
+Mia - beloved; mine
+Mueller - Miller
+Nancy - Grace, Favor
+Nelson - Son of Nel, Son of Neil
+Nikko - Victory, Victory of the People
+Nina - "little girl", grace, favor, fire
+Noah - Rest, Comfort, Repose
+Pablo - small or humble
+Patricia - Noble or Patrician
+Pita - stone or rock; qualities of stability, reliability; resilience
+Penelope - weaver; unraveled; represents faithfulness and devotion
+Paul - small or humble
+Rachel - ewe - female sheep
+Raul - Wolf counsel or Strong counsel
+Remy - Oarsman, rower; God comforts me; The dominant ones, The first; Heaven's pupil.
+Roman - Strong, Powerful
+Rona - song of joy; seal island
+Rojelio - request; famous with the spear
+Roy - red king
+Ruben - behold; a son
+Sasha - defender of mankind
+Servando - Keeping, Maintaining, or Preserving
+Shannon - old; wise
+Shaun - God is gracious
+Sky - Heavenly Creature
+Sophia - wisdom
+Sulema - Peace, peaceful
+Theresa - harvester
+Thomas - twin
+Tobon - God is good
+Toni - Flower like, Flourishing, Follower of christ
+Tony - Flower like, Flourishing, Follower of christ
+Truman - Faithful man, trustworthy man
+Yolanda - Violet Flower
+Yoli - To live, something that lives
+Valadez - Valley of the lord
+Victoria - Victory
+Villanueva - New Village, New Town
+William - Resolute, Protector, or Will Helmet
+Wilham - Resolute, Protector, or Will Helmet
+Zachary - God Remembers, or The Lord has Remembered
+        `;
+
+        function parseAndSortNames(data) {
+            const lines = data.trim().split('\n');
+            const names = lines.map(line => {
+                const parts = line.split(' - ');
+                const name = parts[0]?.trim();
+                const meaning = parts.slice(1).join(' - ').trim();
+                return { name, meaning };
+            }).filter(item => item.name && item.meaning);
+
+            names.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+            return names;
+        }
+
+        function renderNames(names) {
+            const container = document.getElementById('nameListContainer');
+            if (!container) {
+                console.error("Name list container not found!");
+                return;
+            }
+            container.innerHTML = ''; // Clear loading message
+
+            if (names.length === 0) {
+                container.innerHTML = '<li class="name-item"><span class="name-title">Error</span><span class="name-meaning">Could not load name data.</span></li>';
+                return;
+            }
+
+            names.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'name-item';
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'name-title';
+                nameSpan.textContent = item.name;
+
+                const meaningSpan = document.createElement('span');
+                meaningSpan.className = 'name-meaning';
+                meaningSpan.textContent = item.meaning;
+
+                li.appendChild(nameSpan);
+                li.appendChild(meaningSpan);
+                container.appendChild(li);
+            });
+        }
+
+        // Execute parsing and rendering when the DOM is ready
+        // No need to wait for DOMContentLoaded here as the script is at the end of body
+        // unless navbar.js relies on it, but navbar.js has its own DOMContentLoaded listener.
+        // It's safer to just run it directly.
+         try {
+             const sortedNames = parseAndSortNames(nameData);
+             renderNames(sortedNames);
+         } catch (error) {
+             console.error("Error processing name data:", error);
+             const container = document.getElementById('nameListContainer');
+             if (container) {
+                 container.innerHTML = '<li class="name-item"><span class="name-title">Error</span><span class="name-meaning">An error occurred while loading names.</span></li>';
+             }
+         }
+
+    </script>
+
+    <!-- === NAVBAR SCRIPT (defer ensures it runs after HTML parsing) === -->
+    <script src="js/navbar.js" defer></script>
+    <!-- === END NAVBAR SCRIPT === -->
+</body>
+</html>

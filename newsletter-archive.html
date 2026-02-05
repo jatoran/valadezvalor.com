@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valadez Vine Newsletter Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Navbar Stylesheet -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <style>
+        /* Page-specific styles */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #3a80d2;
+            /* Darker blue for hover */
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --card-bg: #fff;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --font-size-page-title: 1.8rem;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Use Poppins for body text */
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            /* Ensure body doesn't interfere with main */
+            display: block !important;
+        }
+
+        /* Removed old header styling */
+
+        h1.page-title {
+            /* New class for the page title inside main */
+            font-family: 'Lora', serif;
+            /* Lora for titles */
+            font-size: var(--font-size-page-title);
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem;
+            /* Add space below navbar */
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            /* Center and add bottom margin */
+            padding: 20px;
+            /* Reset flex potentially inherited from style.css */
+            display: block !important;
+            flex-grow: initial !important;
+            justify-content: initial !important;
+            align-items: initial !important;
+            overflow-y: visible !important;
+        }
+
+        .newsletter-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .newsletter-list li {
+            margin-bottom: 15px;
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .newsletter-list li:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .newsletter-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            /* Use Poppins bold */
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+
+        .newsletter-list a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .newsletter-list span.date {
+            /* Style for the date part */
+            display: block;
+            /* Put date on its own line */
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Removed old back-link styling */
+
+        @media (max-width: 768px) {
+            main {
+                padding: 15px;
+                max-width: 100%;
+            }
+
+            h1.page-title {
+                font-size: 1.5rem;
+            }
+
+            .newsletter-list li {
+                padding: 12px 15px;
+            }
+
+            .newsletter-list a {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- === NAVBAR PLACEHOLDER (Main Site Navigation) === -->
+    <div id="navbar-placeholder">
+        <nav
+            style="background-color: #2c3e50; color: white; min-height: 60px; display: flex; align-items: center; padding: 0 1rem; position: sticky; top: 0; z-index: 1000;">
+            Loading Navigation...
+        </nav>
+    </div>
+    <!-- === END NAVBAR PLACEHOLDER === -->
+
+    <main>
+        <!-- Page Specific Title -->
+        <h1 class="page-title">Newsletter Archive</h1>
+
+        <!-- Removed old header -->
+
+        <!--
+            NOTE: The original HTML had invalid structure with <ul> wrapping each <li>.
+            This is corrected below to a single <ul> wrapping all <li> items.
+        -->
+        <ul class="newsletter-list">
+            <li><span class="date">Jan 1, 2026</span><a href="http://eepurl.com/juvERs"
+                    title="The Valadez Valor January Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor January Newsletter</a></li>
+            <li><span class="date">Dec 1, 2025</span><a href="http://eepurl.com/jsXYa2"
+                    title="The Valadez Valor December Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor December Newsletter</a></li>
+            <li><span class="date">Nov 1, 2025</span><a href="http://eepurl.com/jqnAYU"
+                    title="The Valadez Valor November Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor November Newsletter</a></li>
+            <li><span class="date">Oct 1, 2025</span><a href="http://eepurl.com/jmBuKY"
+                    title="The Valadez Valor October Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor October Newsletter</a></li>
+            <li><span class="date">Sep 1, 2025</span><a href="http://eepurl.com/jlduvc"
+                    title="The Valadez Valor September Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor September Newsletter</a></li>
+            <li><span class="date">Aug 1, 2025</span><a href="http://eepurl.com/jjteXc"
+                    title="The Valadez Valor August Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor August Newsletter</a></li>
+            <li><span class="date">Jul 1, 2025</span><a href="http://eepurl.com/jgZgU6"
+                    title="The Valadez Valor July Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor July Newsletter</a></li>
+            <li><span class="date">Jun 1, 2025</span><a href="http://eepurl.com/jd3_VY"
+                    title="The Valadez Valor June Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor June Newsletter</a></li>
+            <li><span class="date">May 1, 2025</span><a href="http://eepurl.com/jbVLxw"
+                    title="The Valadez Valor May Newsletter" target="_blank" rel="noopener noreferrer">The Valadez Valor
+                    May Newsletter</a></li>
+            <li><span class="date">Apr 1, 2025</span><a href="http://eepurl.com/i_7NQo"
+                    title="The Valadez Valor April Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor April Newsletter</a></li>
+            <li><span class="date">Mar 1, 2025</span><a href="http://eepurl.com/i-ilg6"
+                    title="The Valadez Valor March Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor March Newsletter</a></li>
+            <li><span class="date">Feb 1, 2025</span><a href="http://eepurl.com/i8fG-2"
+                    title="The Valadez Valor February Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor February Newsletter</a></li>
+            <li><span class="date">Jan 1, 2025</span><a href="http://eepurl.com/i4MVCo"
+                    title="The Valadez Valor January Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Valor January Newsletter</a></li>
+            <li><span class="date">Dec 1, 2024</span><a href="http://eepurl.com/iPR2KY"
+                    title="The Valadez Vine - December 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - December 2024 Newsletter</a></li>
+            <li><span class="date">Nov 1, 2024</span><a href="http://eepurl.com/i1lGTg"
+                    title="The Valadez Vine - November 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - November 2024 Newsletter</a></li>
+            <li><span class="date">Oct 1, 2024</span><a href="http://eepurl.com/iY2hYA"
+                    title="The Valadez Vine - October 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - October 2024 Newsletter</a></li>
+            <li><span class="date">Sep 1, 2024</span><a href="http://eepurl.com/iPR2KY"
+                    title="The Valadez Vine - September 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - September 2024 Newsletter</a></li>
+            <li><span class="date">Aug 1, 2024</span><a href="http://eepurl.com/iXaNEA"
+                    title="The Valadez Vine - August 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - August 2024 Newsletter</a></li>
+            <li><span class="date">Jul 1, 2024</span><a href="http://eepurl.com/iPR1HI"
+                    title="The Valadez Vine - July 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - July 2024 Newsletter</a></li>
+            <li><span class="date">Jun 1, 2024</span><a href="http://eepurl.com/iPRZRg"
+                    title="The Valadez Vine - June 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - June 2024 Newsletter</a></li>
+            <li><span class="date">May 1, 2024</span><a href="http://eepurl.com/iOCeIQ"
+                    title="The Valadez Vine - May 2024 Newsletter" target="_blank" rel="noopener noreferrer">The Valadez
+                    Vine - May 2024 Newsletter</a></li>
+            <li><span class="date">Apr 1, 2024</span><a href="http://eepurl.com/iMHwwg"
+                    title="The Valadez Vine - April 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - April 2024 Newsletter</a></li>
+            <li><span class="date">Mar 1, 2024</span><a href="http://eepurl.com/iKI-HE"
+                    title="The Valadez Vine - March 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - March 2024 Newsletter</a></li>
+            <li><span class="date">Feb 4, 2024</span><a href="http://eepurl.com/iJqDuE"
+                    title="The Valadez Vine - January 2024 Newsletter" target="_blank" rel="noopener noreferrer">The
+                    Valadez Vine - January 2024 Newsletter</a></li>
+        </ul>
+
+        <!-- Removed old back-link -->
+    </main>
+
+    <!-- === NAVBAR SCRIPT (defer ensures it runs after HTML parsing) === -->
+    <script src="js/navbar.js" defer></script>
+    <!-- === END NAVBAR SCRIPT === -->
+</body>
+
+</html>

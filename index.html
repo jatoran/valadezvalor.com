@@ -1,0 +1,63 @@
+<!-- valadezfamily/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valadez Valor Slideshow</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Navbar Stylesheet -->
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body class="page-slideshow">
+    <!-- === NAVBAR PLACEHOLDER (Main Site Navigation) === -->
+    <div id="navbar-placeholder">
+        <!-- Static fallback or loading message (optional) -->
+        <nav style="background-color: #2c3e50; color: white; min-height: 60px; display: flex; align-items: center; padding: 0 1rem; position: sticky; top: 0; z-index: 1000;">
+            Loading Navigation...
+        </nav>
+    </div>
+    <!-- === END NAVBAR PLACEHOLDER === -->
+
+    <!-- Page Specific Header -->
+    <header>
+        <h3 id="current-month"></h3> <!-- This will be updated by script.js -->
+    </header>
+
+    <!-- The <nav class="month-nav"> has been COMPLETELY REMOVED -->
+
+    <main>
+        <div id="slideshow-container">
+            <div id="slideshow">
+                <img id="slideshow-image" alt="Slideshow Image" loading="lazy">
+            </div>
+            <div class="swipe-area swipe-left"></div>
+            <div class="swipe-area swipe-right"></div>
+            <div id="controls">
+                <button id="prev"><i class="fas fa-chevron-left"></i></button>
+                <button id="play-pause-slideshow"><i class="fas fa-play"></i></button>
+                <button id="next"><i class="fas fa-chevron-right"></i></button>
+                <button id="audio-control"><i class="fas fa-volume-mute"></i></button>
+            </div>
+            <div class="image-counter">
+                <span id="current-image">0</span> / <span id="total-images">0</span> <!-- Default to 0 -->
+            </div>
+        </div>
+    </main>
+
+    <audio id="background-audio" preload="auto"></audio>
+
+    <!-- Main slideshow script (ensure month-nav logic is removed from here too) -->
+    <script src="script.js"></script>
+
+    <!-- === NAVBAR SCRIPT (defer ensures it runs after HTML parsing) === -->
+    <script src="js/navbar.js" defer></script>
+    <!-- === END NAVBAR SCRIPT === -->
+</body>
+</html>
