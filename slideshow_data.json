@@ -1,7 +1,15 @@
 {
-  "February 2026": {
+  "March 2026": {
     "type": "video",
-    "videoSrc": "assets/video/February_2026_slideshow.mp4"
+    "videoSrc": "assets/video/march_2026_slideshow.mp4"
+  },
+  "Brandon Michael Easter - Memorial 2026": {
+    "type": "video",
+    "videoSrc": "assets/video/Brandon_memorial_video_2026.mp4"
+  },
+  "Brandon Michael Easter - Memorial 2026 - Mom's Picks": {
+    "type": "video",
+    "videoSrc": "assets/video/brandon_memorial_video_2026_moms_picks.mp4"
   },
   "Rachey 2026": {
     "type": "video",
