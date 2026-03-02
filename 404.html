@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valadez Family Video</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    <!-- Navbar Stylesheet -->
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+<body class="page-video">
+    <!-- === NAVBAR PLACEHOLDER === -->
+    <div id="navbar-placeholder">
+        <nav style="background-color: #2c3e50; color: white; min-height: 60px; display: flex; align-items: center; padding: 0 1rem; position: sticky; top: 0; z-index: 1000;">
+            Loading Navigation...
+        </nav>
+    </div>
+
+    <!-- Video player (hidden until a video slug is matched) -->
+    <main id="video-main" style="display:none;">
+        <h1 id="video-page-title" class="page-title">Loading Video...</h1>
+        <div id="video-container">
+            <video controls id="video-player-element" preload="metadata">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </main>
+
+    <!-- 404 content (hidden until we confirm it's not a video route) -->
+    <main id="not-found-main" style="display:none; text-align:center; padding: 4rem 1rem;">
+        <h1 class="page-title" style="font-size:2.5rem;">404</h1>
+        <p style="font-size:1.2rem; margin-top:1rem;">Page not found.</p>
+        <a href="/" style="display:inline-block; margin-top:2rem; color:var(--primary-color); font-size:1.1rem;">Go Home</a>
+    </main>
+
+    <script>
+    // Video slug map: slug -> { src, title }
+    const VIDEO_MAP = {
+        "march-2026": {
+            src: "assets/video/march_2026_slideshow.mp4",
+            title: "March 2026"
+        },
+        "brandon-michael-easter-memorial-2026": {
+            src: "assets/video/Brandon_memorial_video_2026.mp4",
+            title: "Brandon Michael Easter - Memorial 2026"
+        },
+        "brandon-michael-easter-memorial-2026-moms-picks": {
+            src: "assets/video/brandon_memorial_video_2026_moms_picks.mp4",
+            title: "Brandon Michael Easter - Memorial 2026 - Mom's Picks"
+        },
+        "february-2026": {
+            src: "assets/video/February_2026_slideshow.mp4",
+            title: "February 2026"
+        },
+        "rachey-2026": {
+            src: "assets/video/Rachey_2026_slideshow.mp4",
+            title: "Rachey 2026"
+        },
+        "january-2026": {
+            src: "assets/video/January_2026_slideshow.mp4",
+            title: "January 2026"
+        },
+        "happy-birthday-memorial-2026": {
+            src: "assets/video/Happy_Birthday_Memorial_2026.mp4",
+            title: "Happy Birthday Memorial 2026"
+        },
+        "december-2025": {
+            src: "assets/video/December_2025_slideshow.mp4",
+            title: "December 2025"
+        },
+        "november-2025": {
+            src: "assets/video/November_2025_slideshow.mp4",
+            title: "November 2025"
+        },
+        "october-2025": {
+            src: "assets/video/October_2025_slideshow.mp4",
+            title: "October 2025"
+        },
+        "september-2025": {
+            src: "assets/video/September_2025_slideshow.mp4",
+            title: "September 2025"
+        },
+        "august-2025": {
+            src: "assets/video/August_2025_slideshow.mp4",
+            title: "August 2025"
+        },
+        "july-2025": {
+            src: "assets/video/July_2025_slideshow.mp4",
+            title: "July 2025"
+        },
+        "june-2025": {
+            src: "assets/video/June_2025_slideshow.mp4",
+            title: "June 2025"
+        },
+        "may-2025": {
+            src: "assets/video/May_2025_slideshow.mp4",
+            title: "May 2025"
+        },
+        "rachel-valadez": {
+            src: "assets/video/rachel.mp4",
+            title: "Rachel Valadez"
+        }
+    };
+
+    (function() {
+        // Check if the path matches /v/<slug>
+        const path = window.location.pathname;
+        const match = path.match(/^\/v\/([a-z0-9-]+)\/?$/);
+
+        if (match) {
+            const slug = match[1];
+            const video = VIDEO_MAP[slug];
+
+            if (video) {
+                // Show the video player
+                document.getElementById('video-main').style.display = '';
+                document.getElementById('video-page-title').textContent = video.title;
+                document.title = video.title + ' - Valadez Family';
+
+                const videoEl = document.getElementById('video-player-element');
+                // Clear default children
+                while (videoEl.firstChild) videoEl.removeChild(videoEl.firstChild);
+
+                const source = document.createElement('source');
+                source.src = '/' + video.src;
+                source.type = 'video/mp4';
+                videoEl.appendChild(source);
+                videoEl.appendChild(document.createTextNode('Your browser does not support the video tag.'));
+                videoEl.load();
+                videoEl.volume = 0.3;
+                return;
+            }
+        }
+
+        // Not a video route — show 404
+        document.getElementById('not-found-main').style.display = '';
+        document.title = '404 - Page Not Found - Valadez Family';
+    })();
+    </script>
+
+    <!-- Navbar script (uses absolute paths since this page serves from any path) -->
+    <script>
+    // Override navbar.js fetch paths to use absolute URLs since 404.html serves from arbitrary paths
+    document.addEventListener('DOMContentLoaded', async () => {
+        const navbarPlaceholder = document.getElementById('navbar-placeholder');
+        try {
+            const [navbarHtmlResponse, slideshowDataResponse] = await Promise.all([
+                fetch('/components/navbar.html'),
+                fetch('/slideshow_data.json')
+            ]);
+            if (!navbarHtmlResponse.ok || !slideshowDataResponse.ok) throw new Error('Failed to load navbar');
+            const navbarHtml = await navbarHtmlResponse.text();
+            const slideshowData = await slideshowDataResponse.json();
+            navbarPlaceholder.innerHTML = navbarHtml;
+
+            // Populate slideshow dropdown (same logic as navbar.js but with clean URLs)
+            const dropdownMenu = document.getElementById('slideshows-dropdown-menu');
+            if (dropdownMenu) {
+                dropdownMenu.innerHTML = '';
+                Object.keys(slideshowData).forEach(key => {
+                    const entry = slideshowData[key];
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.classList.add('dropdown-item');
+                    a.textContent = key;
+                    if (entry.type === 'video' && entry.videoSrc) {
+                        a.href = '/v/' + titleToSlug(key);
+                    } else {
+                        a.href = '/index.html#' + encodeURIComponent(key);
+                    }
+                    li.appendChild(a);
+                    dropdownMenu.appendChild(li);
+                });
+            }
+
+            // Initialize navbar toggler (simplified from navbar.js)
+            const toggler = document.getElementById('navbar-toggler');
+            const collapse = document.getElementById('navbar-collapse');
+            if (toggler && collapse) {
+                toggler.addEventListener('click', () => {
+                    const isActive = collapse.classList.toggle('active');
+                    toggler.classList.toggle('active', isActive);
+                });
+                document.querySelectorAll('.navbar-nav .dropdown-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (window.getComputedStyle(toggler).display !== 'none') {
+                            const parentItem = toggle.closest('.nav-item.dropdown');
+                            if (parentItem) parentItem.classList.toggle('open');
+                        }
+                    });
+                });
+            }
+        } catch (error) {
+            console.error('Error loading navbar:', error);
+            navbarPlaceholder.innerHTML = '<nav style="background-color:#2c3e50;color:white;min-height:60px;display:flex;align-items:center;padding:0 1rem;"><a href="/" style="color:white;text-decoration:none;font-weight:bold;">Valadez Family</a></nav>';
+        }
+    });
+
+    function titleToSlug(title) {
+        return title.toLowerCase()
+            .replace(/[''"]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '');
+    }
+    </script>
+</body>
+</html>

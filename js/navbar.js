@@ -47,6 +47,13 @@ async function loadNavbarAndData() {
     }
 }
 
+function titleToSlug(title) {
+    return title.toLowerCase()
+        .replace(/[''"]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+}
+
 function populateSlideshowDropdown(slideshowData) {
     const dropdownMenu = document.getElementById('slideshows-dropdown-menu');
     if (!dropdownMenu) {
@@ -69,11 +76,9 @@ function populateSlideshowDropdown(slideshowData) {
         a.textContent = key; // e.g., "April 2025" or "Rachel's Video"
 
         // Determine link based on type
-        if (entry.type === 'video' && entry.videoSrc) { // Check for video type and src
-            // Generic video link to video-player.html with parameters
-            const videoSrcEncoded = encodeURIComponent(entry.videoSrc);
-            const titleEncoded = encodeURIComponent(key);
-            a.href = `video-player.html?video=${videoSrcEncoded}&title=${titleEncoded}`;
+        if (entry.type === 'video' && entry.videoSrc) {
+            // Clean URL for videos (handled by 404.html router)
+            a.href = `/v/${titleToSlug(key)}`;
         } else {
             // Assume image slideshow (type === 'image' or type missing)
             a.href = `index.html#${encodeURIComponent(key)}`;
@@ -231,10 +236,17 @@ function setActiveLink() {
             }
         }
 
-        // 3. video-player.html Match
+        // 3. video-player.html Match (legacy query param URLs)
         if (pageName === 'video-player.html' && linkPageName === 'video-player.html') {
             // Activate if the 'video' parameter matches
             if (currentVideoParam && linkVideoParam && currentVideoParam === linkVideoParam) {
+                isActive = true;
+            }
+        }
+
+        // 4. Clean video URL match (/v/slug)
+        if (currentPath.startsWith('/v/') && linkHref.startsWith('/v/')) {
+            if (currentPath === linkHref || currentPath === linkHref + '/') {
                 isActive = true;
             }
         }
