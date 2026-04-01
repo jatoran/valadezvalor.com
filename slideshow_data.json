@@ -1,4 +1,8 @@
 {
+  "April 2026": {
+    "type": "video",
+    "videoSrc": "assets/video/april_2026_slideshow.mp4"
+  },
   "March 2026": {
     "type": "video",
     "videoSrc": "assets/video/march_2026_slideshow.mp4"
