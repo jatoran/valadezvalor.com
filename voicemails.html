@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="css/navbar.css">
     <style>
         main.voicemails-main {
-            max-width: 720px;
-            margin: 2rem auto;
+            max-width: 880px;
+            margin: 2rem auto 4rem;
             padding: 0 1.25rem;
             font-family: 'Poppins', sans-serif;
             color: #333;
@@ -19,32 +19,115 @@
         .voicemails-main .page-title {
             text-align: center;
             font-family: 'Lora', serif;
-            font-size: 2rem;
+            font-size: 2.25rem;
             margin-bottom: 0.25rem;
+            color: #2c3e50;
         }
         .voicemails-main .page-subtitle {
             text-align: center;
             color: #666;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
         }
+
         .voicemail-card {
             background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border: 1px solid #e3e6ea;
+            border-radius: 12px;
             padding: 1.25rem 1.5rem;
             margin-bottom: 1.25rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+        .voicemail-card:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
         }
         .voicemail-card h2 {
             font-family: 'Lora', serif;
-            font-size: 1.15rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            margin: 0 0 0.9rem;
             color: #2c3e50;
+            font-weight: 700;
         }
-        .voicemail-card audio {
+
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             width: 100%;
-            display: block;
+        }
+
+        .audio-player .play-btn {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #4a90e2, #357ab8);
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(74, 144, 226, 0.4);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+        }
+        .audio-player .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(74, 144, 226, 0.55);
+        }
+        .audio-player .play-btn:active {
+            transform: scale(0.97);
+        }
+        .audio-player .play-btn i {
+            margin-left: 2px; /* nudge the play triangle to look centered */
+        }
+        .audio-player .play-btn.is-playing i {
+            margin-left: 0;
+        }
+
+        .audio-player .player-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            min-width: 0;
+        }
+
+        .audio-player .progress {
+            position: relative;
+            height: 8px;
+            background: #e6ebf1;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .audio-player .progress-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 0%;
+            background: linear-gradient(90deg, #4a90e2, #357ab8);
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        .audio-player .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-variant-numeric: tabular-nums;
+        }
+        .audio-player .meta .time {
+            font-feature-settings: "tnum";
+        }
+
+        @media (max-width: 480px) {
+            .voicemail-card { padding: 1rem; }
+            .audio-player { gap: 0.75rem; }
+            .audio-player .play-btn { width: 46px; height: 46px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -61,28 +144,109 @@
 
         <section class="voicemail-card">
             <h2>Voicemail 1</h2>
-            <audio controls preload="metadata">
-                <source src="assets/audio/rachel-voicemail%20(1).mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+            <div class="audio-player" data-src="assets/audio/rachel-voicemail%20(1).mp3"></div>
         </section>
 
         <section class="voicemail-card">
             <h2>Voicemail 2</h2>
-            <audio controls preload="metadata">
-                <source src="assets/audio/rachel-voicemail%20(2).mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+            <div class="audio-player" data-src="assets/audio/rachel-voicemail%20(2).mp3"></div>
         </section>
 
         <section class="voicemail-card">
             <h2>Voicemail 3</h2>
-            <audio controls preload="metadata">
-                <source src="assets/audio/rachel-voicemail%20(3).mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+            <div class="audio-player" data-src="assets/audio/rachel-voicemail%20(3).mp3"></div>
         </section>
     </main>
+
+    <script>
+        (function () {
+            function fmt(seconds) {
+                if (!isFinite(seconds) || seconds < 0) return '0:00';
+                const m = Math.floor(seconds / 60);
+                const s = Math.floor(seconds % 60);
+                return m + ':' + (s < 10 ? '0' + s : s);
+            }
+
+            const players = [];
+
+            document.querySelectorAll('.audio-player').forEach(function (el) {
+                const src = el.getAttribute('data-src');
+                const audio = new Audio(src);
+                audio.preload = 'metadata';
+
+                el.innerHTML =
+                    '<button type="button" class="play-btn" aria-label="Play">' +
+                        '<i class="fas fa-play"></i>' +
+                    '</button>' +
+                    '<div class="player-body">' +
+                        '<div class="progress"><div class="progress-fill"></div></div>' +
+                        '<div class="meta">' +
+                            '<span class="time current">0:00</span>' +
+                            '<span class="time total">0:00</span>' +
+                        '</div>' +
+                    '</div>';
+
+                const btn = el.querySelector('.play-btn');
+                const icon = btn.querySelector('i');
+                const progress = el.querySelector('.progress');
+                const fill = el.querySelector('.progress-fill');
+                const currentEl = el.querySelector('.time.current');
+                const totalEl = el.querySelector('.time.total');
+
+                const player = { audio: audio, btn: btn, icon: icon };
+                players.push(player);
+
+                audio.addEventListener('loadedmetadata', function () {
+                    totalEl.textContent = fmt(audio.duration);
+                });
+
+                audio.addEventListener('timeupdate', function () {
+                    if (audio.duration) {
+                        fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+                    }
+                    currentEl.textContent = fmt(audio.currentTime);
+                });
+
+                audio.addEventListener('ended', function () {
+                    btn.classList.remove('is-playing');
+                    icon.className = 'fas fa-play';
+                    btn.setAttribute('aria-label', 'Play');
+                    fill.style.width = '0%';
+                    currentEl.textContent = '0:00';
+                });
+
+                btn.addEventListener('click', function () {
+                    if (audio.paused) {
+                        // pause any other player so only one plays at a time
+                        players.forEach(function (p) {
+                            if (p.audio !== audio && !p.audio.paused) {
+                                p.audio.pause();
+                                p.btn.classList.remove('is-playing');
+                                p.icon.className = 'fas fa-play';
+                                p.btn.setAttribute('aria-label', 'Play');
+                            }
+                        });
+                        audio.play();
+                        btn.classList.add('is-playing');
+                        icon.className = 'fas fa-pause';
+                        btn.setAttribute('aria-label', 'Pause');
+                    } else {
+                        audio.pause();
+                        btn.classList.remove('is-playing');
+                        icon.className = 'fas fa-play';
+                        btn.setAttribute('aria-label', 'Play');
+                    }
+                });
+
+                progress.addEventListener('click', function (e) {
+                    if (!audio.duration) return;
+                    const rect = progress.getBoundingClientRect();
+                    const ratio = (e.clientX - rect.left) / rect.width;
+                    audio.currentTime = Math.max(0, Math.min(1, ratio)) * audio.duration;
+                });
+            });
+        })();
+    </script>
 
     <script src="js/navbar.js" defer></script>
 </body>
