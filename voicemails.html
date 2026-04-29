@@ -142,20 +142,9 @@
         <h1 class="page-title">Rachel's Voicemails</h1>
         <p class="page-subtitle">Saved messages from Rachel.</p>
 
-        <section class="voicemail-card">
-            <h2>Voicemail 1</h2>
-            <div class="audio-player" data-src="assets/audio/rachel-voicemail%20(1).mp3"></div>
-        </section>
-
-        <section class="voicemail-card">
-            <h2>Voicemail 2</h2>
-            <div class="audio-player" data-src="assets/audio/rachel-voicemail%20(2).mp3"></div>
-        </section>
-
-        <section class="voicemail-card">
-            <h2>Voicemail 3</h2>
-            <div class="audio-player" data-src="assets/audio/rachel-voicemail%20(3).mp3"></div>
-        </section>
+        <div id="voicemails-list">
+            <p class="page-subtitle" style="margin: 1rem 0;">Loading voicemails...</p>
+        </div>
     </main>
 
     <script>
@@ -169,7 +158,7 @@
 
             const players = [];
 
-            document.querySelectorAll('.audio-player').forEach(function (el) {
+            function buildPlayer(el) {
                 const src = el.getAttribute('data-src');
                 const audio = new Audio(src);
                 audio.preload = 'metadata';
@@ -244,7 +233,41 @@
                     const ratio = (e.clientX - rect.left) / rect.width;
                     audio.currentTime = Math.max(0, Math.min(1, ratio)) * audio.duration;
                 });
-            });
+            }
+
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+                });
+            }
+
+            function renderVoicemails(list) {
+                const container = document.getElementById('voicemails-list');
+                if (!list.length) {
+                    container.innerHTML = '<p class="page-subtitle" style="margin: 1rem 0;">No voicemails yet.</p>';
+                    return;
+                }
+                container.innerHTML = list.map(function (item) {
+                    const encoded = item.src.split('/').map(encodeURIComponent).join('/');
+                    return '<section class="voicemail-card">' +
+                               '<h2>' + escapeHtml(item.title) + '</h2>' +
+                               '<div class="audio-player" data-src="' + encoded + '"></div>' +
+                           '</section>';
+                }).join('');
+                container.querySelectorAll('.audio-player').forEach(buildPlayer);
+            }
+
+            fetch('voicemails.json', { cache: 'no-cache' })
+                .then(function (r) {
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    return r.json();
+                })
+                .then(renderVoicemails)
+                .catch(function (err) {
+                    console.error('Failed to load voicemails.json:', err);
+                    const container = document.getElementById('voicemails-list');
+                    container.innerHTML = '<p class="page-subtitle" style="margin: 1rem 0; color: #b00;">Could not load voicemails.</p>';
+                });
         })();
     </script>
 
