@@ -1,4 +1,12 @@
 {
+  "June 2026": {
+    "type": "video",
+    "videoSrc": "assets/video/june_2026_slideshow.mp4"
+  },
+  "Juanite Valadez Memorial Video": {
+    "type": "video",
+    "videoSrc": "assets/video/Juanita_Valadez_Memorial_Video.mp4"
+  },
   "May 2026": {
     "type": "video",
     "videoSrc": "assets/video/may_2026_slideshow.mp4"
