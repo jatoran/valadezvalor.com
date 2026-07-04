@@ -117,11 +117,15 @@ function initializeNavbar() {
     // --- Dropdown Toggle Click Handler (Mobile Specific Behavior + Always Prevent Default) ---
     dropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', (e) => {
-            // *ALWAYS* prevent default link behavior (#) for the toggle itself
-            e.preventDefault();
+            const href = toggle.getAttribute('href');
+            const isPlaceholderToggle = !href || href === '#';
+
+            if (isPlaceholderToggle) {
+                e.preventDefault();
+            }
 
             // Check if we are in mobile view (toggler is visible) to handle opening/closing
-            if (window.getComputedStyle(toggler).display !== 'none') {
+            if (isPlaceholderToggle && window.getComputedStyle(toggler).display !== 'none') {
                 const parentItem = toggle.closest('.nav-item.dropdown');
                 if (parentItem) {
                      const isOpen = parentItem.classList.toggle('open');
