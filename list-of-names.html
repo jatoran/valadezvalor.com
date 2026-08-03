@@ -180,6 +180,15 @@
     </main>
 
     <script>
+        // Birth year is optional in birthdays.json. Accept a 4-digit number (or a
+        // numeric string) within a sane range; anything else renders as no year.
+        function normalizeYear(year) {
+            const parsed = typeof year === 'string' ? Number(year.trim()) : year;
+            if (!Number.isInteger(parsed)) return null;
+            if (parsed < 1800 || parsed > new Date().getFullYear()) return null;
+            return parsed;
+        }
+
         // Function to fetch and render the sorted list of names
         async function fetchAndRenderNames() {
             const tbody = document.querySelector('#namesTable tbody');
@@ -237,15 +246,18 @@
                     tr.appendChild(nameTd);
 
                     const dateTd = document.createElement('td');
-                    // Format the date as Month Day
+                    // Format the date as Month Day, optionally followed by the birth year
+                    const year = normalizeYear(person.year);
                     try {
                         const [month, day] = person.date.split('-');
-                        // Use a consistent year (like 2000) for date formatting, avoids leap year issues if only month/day matter
+                        // Always format month/day against a leap year (2000) so a Feb 29
+                        // entry is not silently rolled over to Mar 1 by a non-leap birth year.
                         const dateObj = new Date(2000, parseInt(month) - 1, parseInt(day));
                         const options = { month: 'long', day: 'numeric' };
                          // Check if date is valid before formatting
                         if (!isNaN(dateObj.getTime())) {
-                           dateTd.textContent = dateObj.toLocaleDateString('en-US', options);
+                           const formatted = dateObj.toLocaleDateString('en-US', options);
+                           dateTd.textContent = year ? `${formatted}, ${year}` : formatted;
                         } else {
                              dateTd.textContent = person.date; // Fallback to original string if invalid
                              console.warn(`Invalid date format for ${person.name}: ${person.date}`);

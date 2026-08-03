@@ -148,6 +148,12 @@
             text-align: right; /* Align date to the right */
         }
 
+        .birthday-year { /* Optional birth year, shown only when present in birthdays.json */
+            color: #888;
+            font-weight: 400;
+            margin-left: 0.35rem;
+        }
+
         /* Removed old back-link styling */
 
         @media (max-width: 768px) {
@@ -218,6 +224,15 @@
             'July', 'August', 'September', 'October', 'November', 'December'
         ];
 
+        // Birth year is optional in birthdays.json. Accept a 4-digit number (or a
+        // numeric string) within a sane range; anything else renders as no year.
+        function normalizeYear(year) {
+            const parsed = typeof year === 'string' ? Number(year.trim()) : year;
+            if (!Number.isInteger(parsed)) return null;
+            if (parsed < 1800 || parsed > new Date().getFullYear()) return null;
+            return parsed;
+        }
+
         function createMonthSection(month, birthdays) {
             // Sort birthdays within the month by day
             birthdays.sort((a, b) => a.date - b.date); // 'date' is now just the day number
@@ -227,12 +242,15 @@
             section.innerHTML = `
                 <div class="month-header">${month}</div>
                 <div class="birthday-items">
-                    ${birthdays.map(b => `
+                    ${birthdays.map(b => {
+                        const year = normalizeYear(b.year);
+                        return `
                         <div class="birthday-item">
                             <span class="birthday-name">${b.name}</span>
-                            <span class="birthday-date">${b.date}</span>
+                            <span class="birthday-date">${b.date}${year ? `<span class="birthday-year">${year}</span>` : ''}</span>
                         </div>
-                    `).join('')}
+                    `;
+                    }).join('')}
                 </div>
             `;
             return section;
