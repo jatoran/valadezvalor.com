@@ -148,12 +148,6 @@
             text-align: right; /* Align date to the right */
         }
 
-        .birthday-year { /* Optional birth year, shown only when present in birthdays.json */
-            color: #888;
-            font-weight: 400;
-            margin-left: 0.35rem;
-        }
-
         /* Removed old back-link styling */
 
         @media (max-width: 768px) {
@@ -233,24 +227,29 @@
             return parsed;
         }
 
+        // Each row repeats the month even under a month header, so a date read on
+        // its own is unambiguous: "1/2", or "12/3/1989" when the year is known.
+        function formatDate(entry) {
+            const year = normalizeYear(entry.year);
+            const base = `${entry.month}/${entry.day}`;
+            return year ? `${base}/${year}` : base;
+        }
+
         function createMonthSection(month, birthdays) {
             // Sort birthdays within the month by day
-            birthdays.sort((a, b) => a.date - b.date); // 'date' is now just the day number
+            birthdays.sort((a, b) => a.day - b.day);
 
             const section = document.createElement('div');
             section.className = 'birthday-list';
             section.innerHTML = `
                 <div class="month-header">${month}</div>
                 <div class="birthday-items">
-                    ${birthdays.map(b => {
-                        const year = normalizeYear(b.year);
-                        return `
+                    ${birthdays.map(b => `
                         <div class="birthday-item">
                             <span class="birthday-name">${b.name}</span>
-                            <span class="birthday-date">${b.date}${year ? `<span class="birthday-year">${year}</span>` : ''}</span>
+                            <span class="birthday-date">${formatDate(b)}</span>
                         </div>
-                    `;
-                    }).join('')}
+                    `).join('')}
                 </div>
             `;
             return section;
@@ -292,7 +291,8 @@
                     if (monthIndex >= 0 && monthIndex < 12) {
                         const monthName = months[monthIndex];
                         const dayNumber = parseInt(dayStr, 10); // Remove leading zero
-                        birthdaysByMonth[monthName].push({ ...birthday, date: dayNumber }); // Store only day number
+                        // Keep month and day as separate numbers for sorting and display
+                        birthdaysByMonth[monthName].push({ ...birthday, month: monthIndex + 1, day: dayNumber });
                     } else {
                         console.warn(`Invalid month found in date: ${birthday.date} for ${birthday.name}`);
                     }
