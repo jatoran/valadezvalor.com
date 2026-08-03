@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Gate for `gwt land`. Must exit 0 or the branch does not land, and landing
+# also fast-forwards the base branch, so this is what protects it.
+# Runs with the landing worktree as the working directory.
+set -euo pipefail
+
+# Static site: no build, no test runner. The failure mode that actually breaks
+# pages at runtime is malformed JSON, since every page renders from fetch()ed
+# data. Validate structure and shape of the data files.
+node scripts/validate-data.mjs

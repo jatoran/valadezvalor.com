@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Bootstrap a fresh agent worktree. Runs inside the new worktree.
+# Only gitignored state needs handling here; tracked files come with the checkout.
+set -euo pipefail
+
+echo "worktree ready"

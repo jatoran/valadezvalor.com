@@ -1,0 +1,7 @@
+# core.autocrlf is true on this machine, which would check these out with CRLF
+# line endings. bash then fails on the shebang ("bad interpreter: ...^M"), which
+# would break every commit through .githooks and every `gwt land`.
+.githooks/** text eol=lf
+.worktree-setup text eol=lf
+.worktree-verify text eol=lf
+scripts/*.mjs text eol=lf
