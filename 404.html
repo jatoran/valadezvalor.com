@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="/style.css">
     <!-- Navbar Stylesheet -->
     <link rel="stylesheet" href="/css/navbar.css">
+    <!-- Navbar script. Loaded synchronously (not deferred) so the router below can reuse
+         its titleToSlug() and its memoized slideshow-data fetch during body parse. -->
+    <script src="/js/navbar.js"></script>
 </head>
 <body class="page-video">
     <!-- === NAVBAR PLACEHOLDER === -->
@@ -41,19 +44,9 @@
 
     <script>
     // Single source of truth: the /v/<slug> router and the navbar dropdown both derive
-    // their links from slideshow_data.json using the SAME slug function, so a video that
-    // exists in the data can never 404 from a stale, hand-maintained map.
-    const slideshowDataPromise = fetch('/slideshow_data.json').then(response => {
-        if (!response.ok) throw new Error('HTTP ' + response.status + ' loading slideshow_data.json');
-        return response.json();
-    });
-
-    function titleToSlug(title) {
-        return title.toLowerCase()
-            .replace(/[''"]/g, '')
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-|-$/g, '');
-    }
+    // their links from slideshow_data.json using the SAME slug function (titleToSlug,
+    // defined once in js/navbar.js), so a video that exists in the data can never 404
+    // from a stale, hand-maintained map.
 
     function showVideo(video) {
         document.getElementById('not-found-main').style.display = 'none';
@@ -95,7 +88,7 @@
         // user sees feedback while slideshow_data.json is fetched, instead of a blank page.
         document.getElementById('video-main').style.display = '';
         try {
-            const data = await slideshowDataPromise;
+            const data = await getSlideshowData();
             let found = null;
             for (const key of Object.keys(data)) {
                 const entry = data[key];
@@ -116,64 +109,8 @@
     })();
     </script>
 
-    <!-- Navbar script (uses absolute paths since this page serves from any path) -->
-    <script>
-    // Override navbar.js fetch paths to use absolute URLs since 404.html serves from arbitrary paths
-    document.addEventListener('DOMContentLoaded', async () => {
-        const navbarPlaceholder = document.getElementById('navbar-placeholder');
-        try {
-            // Reuse the shared slideshow data fetch (no second download); only navbar HTML is new here.
-            const [navbarHtmlResponse, slideshowData] = await Promise.all([
-                fetch('/components/navbar.html'),
-                slideshowDataPromise
-            ]);
-            if (!navbarHtmlResponse.ok) throw new Error('Failed to load navbar');
-            const navbarHtml = await navbarHtmlResponse.text();
-            navbarPlaceholder.innerHTML = navbarHtml;
-
-            // Populate slideshow dropdown (same logic as navbar.js but with clean URLs)
-            const dropdownMenu = document.getElementById('slideshows-dropdown-menu');
-            if (dropdownMenu) {
-                dropdownMenu.innerHTML = '';
-                Object.keys(slideshowData).forEach(key => {
-                    const entry = slideshowData[key];
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.classList.add('dropdown-item');
-                    a.textContent = key;
-                    if (entry.type === 'video' && entry.videoSrc) {
-                        a.href = '/v/' + titleToSlug(key);
-                    } else {
-                        a.href = '/index.html#' + encodeURIComponent(key);
-                    }
-                    li.appendChild(a);
-                    dropdownMenu.appendChild(li);
-                });
-            }
-
-            // Initialize navbar toggler (simplified from navbar.js)
-            const toggler = document.getElementById('navbar-toggler');
-            const collapse = document.getElementById('navbar-collapse');
-            if (toggler && collapse) {
-                toggler.addEventListener('click', () => {
-                    const isActive = collapse.classList.toggle('active');
-                    toggler.classList.toggle('active', isActive);
-                });
-                document.querySelectorAll('.navbar-nav .dropdown-toggle').forEach(toggle => {
-                    toggle.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        if (window.getComputedStyle(toggler).display !== 'none') {
-                            const parentItem = toggle.closest('.nav-item.dropdown');
-                            if (parentItem) parentItem.classList.toggle('open');
-                        }
-                    });
-                });
-            }
-        } catch (error) {
-            console.error('Error loading navbar:', error);
-            navbarPlaceholder.innerHTML = '<nav style="background-color:#2c3e50;color:white;min-height:60px;display:flex;align-items:center;padding:0 1rem;"><a href="/" style="color:white;text-decoration:none;font-weight:bold;">Valadez Family</a></nav>';
-        }
-    });
-    </script>
+    <!-- The navbar is built by /js/navbar.js (loaded in <head>), which is the same code
+         path every other page uses. No duplicated bootstrap here on purpose: the previous
+         copy drifted from the original and produced links that broke on /v/ routes. -->
 </body>
 </html>

@@ -1,8 +1,26 @@
 // valadezfamily/js/navbar.js
 
+// Every path here is root-absolute on purpose. The navbar is injected into pages that
+// serve from arbitrary depths (notably the /v/<slug> video routes handled by 404.html),
+// and a document-relative path would resolve against /v/ and 404.
 document.addEventListener('DOMContentLoaded', () => {
     loadNavbarAndData();
 });
+
+// Shared, memoized slideshow data fetch. 404.html's video router needs the same file,
+// so it calls this instead of issuing a second download.
+let slideshowDataPromise = null;
+function getSlideshowData() {
+    if (!slideshowDataPromise) {
+        slideshowDataPromise = fetch('/slideshow_data.json').then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error loading slideshow data! status: ${response.status}`);
+            }
+            return response.json();
+        });
+    }
+    return slideshowDataPromise;
+}
 
 async function loadNavbarAndData() {
     const navbarPlaceholder = document.getElementById('navbar-placeholder');
@@ -13,21 +31,16 @@ async function loadNavbarAndData() {
 
     // Fetch navbar HTML and slideshow data concurrently
     try {
-        // Use relative paths from the HTML document location
-        const [navbarHtmlResponse, slideshowDataResponse] = await Promise.all([
-            fetch('components/navbar.html'),
-            fetch('slideshow_data.json') // Assumes it's in the root
+        const [navbarHtmlResponse, slideshowData] = await Promise.all([
+            fetch('/components/navbar.html'),
+            getSlideshowData()
         ]);
 
         if (!navbarHtmlResponse.ok) {
             throw new Error(`HTTP error loading navbar HTML! status: ${navbarHtmlResponse.status}`);
         }
-        if (!slideshowDataResponse.ok) {
-            throw new Error(`HTTP error loading slideshow data! status: ${slideshowDataResponse.status}`);
-        }
 
         const navbarHtml = await navbarHtmlResponse.text();
-        const slideshowData = await slideshowDataResponse.json();
 
         // Insert navbar HTML
         navbarPlaceholder.innerHTML = navbarHtml;
@@ -43,7 +56,9 @@ async function loadNavbarAndData() {
 
     } catch (error) {
         console.error('Error loading navbar or slideshow data:', error);
-        navbarPlaceholder.innerHTML = '<p style="color: red; text-align: center; background-color: #eee; padding: 10px;">Error loading navigation.</p>';
+        // Degrade to a minimal branded bar that still gets the visitor home,
+        // rather than an error message that strands them.
+        navbarPlaceholder.innerHTML = '<nav style="background-color:#2c3e50;color:white;min-height:60px;display:flex;align-items:center;padding:0 1rem;"><a href="/" style="color:white;text-decoration:none;font-weight:bold;">Valadez Family</a></nav>';
     }
 }
 
@@ -81,7 +96,7 @@ function populateSlideshowDropdown(slideshowData) {
             a.href = `/v/${titleToSlug(key)}`;
         } else {
             // Assume image slideshow (type === 'image' or type missing)
-            a.href = `index.html#${encodeURIComponent(key)}`;
+            a.href = `/index.html#${encodeURIComponent(key)}`;
         }
 
         li.appendChild(a);
