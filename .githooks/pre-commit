@@ -1,20 +1,12 @@
 #!/usr/bin/env bash
-# Guards that make free `git commit` safe for agents:
-#   1. no commits directly onto a protected branch
-#   2. no secret-bearing files or credential-shaped strings in the staged diff
-# Bypassing this with --no-verify is blocked by ~/.claude/hooks/security-validator.ts.
+# Refuses to commit secret-bearing files or credential-shaped strings in the
+# staged diff. Bypassing with --no-verify is blocked by
+# ~/.claude/hooks/security-validator.ts.
+#
+# The protected-branch guard that used to live here was removed: it broke
+# committing from a GUI, where setting HUMAN=1 is not practical. Agents are
+# still expected to work in `gwt new <slug>` worktrees and land with `gwt land`.
 set -euo pipefail
-
-branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
-case "$branch" in
-    main|master|integration|develop|release/*)
-        echo "pre-commit: refusing to commit directly onto '$branch'." >&2
-        echo "  Agents: run 'gwt new <slug>' and work on an agent/* branch." >&2
-        echo "  Humans: HUMAN=1 git commit ... to override." >&2
-        [ "${HUMAN:-}" = "1" ] || exit 1
-        echo "pre-commit: HUMAN=1 set, allowing." >&2
-        ;;
-esac
 
 staged="$(git diff --cached --name-only --diff-filter=ACMR)"
 [ -n "$staged" ] || exit 0
