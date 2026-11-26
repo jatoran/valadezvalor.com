@@ -1,4 +1,8 @@
 {
+  "Lacey's Quinceañera": {
+    "type": "video",
+    "videoSrc": "assets/video/Laceys_Quinceanera_Slideshow.mp4"
+  },
   "December 2026": {
     "type": "video",
     "videoSrc": "assets/video/December_2026_Slideshow.mp4"
